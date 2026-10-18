@@ -1,0 +1,13 @@
+{
+  "name": "despesas-ia",
+  "version": "1.0.0",
+  "description": "Leitor de recibos e notas em lote: fotos e PDFs viram planilha, resumo e relatório de despesas.",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "lint": "echo 'No linter configured — static HTML project'"
+  },
+  "keywords": ["maestria-da-ia", "community-tool", "byok"],
+  "author": "APP-BUILDER-01",
+  "license": "UNLICENSED"
+}

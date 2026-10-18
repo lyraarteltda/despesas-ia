@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidade — Despesas IA</title>
+  <style>
+    :root {
+      --bg: #0a0a0f; --bg-card: rgba(255,255,255,.04); --text: #e8e8ec;
+      --text-muted: #9ca3af; --accent: #a78bfa; --border: rgba(255,255,255,.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.8; font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 48px 24px; }
+    h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff, var(--accent)); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text; }
+    .updated { color: var(--text-muted); font-size: 13px; margin-bottom: 32px; }
+    h2 { font-size: 20px; font-weight: 700; margin: 32px 0 12px; color: var(--accent); }
+    p, li { color: var(--text-muted); margin-bottom: 12px; }
+    ul { padding-left: 20px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 24px 0; }
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 14px; }
+  </style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b1220'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1' fill='%2322d3ee'/%3E%3Crect x='14' y='12' width='4' height='13' rx='1' fill='%2322c55e'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='%23f5b301'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; Voltar para a ferramenta</a>
+    <h1>Política de Privacidade</h1>
+    <p class="updated">Última atualização: {{CURRENT_DATE}}</p>
+
+    <p>Esta Política de Privacidade descreve como a ferramenta <strong>Despesas IA</strong>, oferecida pela comunidade <strong>Maestros da IA</strong>, coleta, utiliza e protege os dados pessoais dos seus usuários, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).</p>
+
+    <h2>1. Dados Coletados</h2>
+    <p>Coletamos apenas os dados estritamente necessários para o funcionamento da ferramenta:</p>
+    <ul>
+      <li><strong>E-mail:</strong> para verificação de acesso à comunidade.</li>
+      <li><strong>Telefone (WhatsApp):</strong> para verificação de acesso à comunidade.</li>
+      <li><strong>Eventos de uso:</strong> ações anônimas dentro da ferramenta (ex.: aberturas, cliques) para melhoria contínua.</li>
+    </ul>
+    <p>Chaves de API de terceiros (OpenAI, Anthropic, etc.) são armazenadas <strong>apenas no navegador do usuário</strong> (localStorage) e nunca são transmitidas para nossos servidores.</p>
+
+    <h2>2. Finalidade do Tratamento</h2>
+    <ul>
+      <li><strong>Verificação de acesso:</strong> confirmar que o usuário é membro ativo da comunidade.</li>
+      <li><strong>Melhoria da ferramenta:</strong> analytics anônimos para entender padrões de uso.</li>
+    </ul>
+
+    <h2>3. Base Legal</h2>
+    <p>O tratamento de dados é realizado com base no <strong>legítimo interesse</strong> (Art. 7º, IX da LGPD) para verificação de acesso e na <strong>execução de contrato</strong> (Art. 7º, V) referente à assinatura da comunidade Maestros da IA.</p>
+
+    <h2>4. Compartilhamento de Dados</h2>
+    <p>Seus dados <strong>não são vendidos ou compartilhados</strong> com terceiros para fins comerciais. Utilizamos os seguintes serviços técnicos:</p>
+    <ul>
+      <li><strong>Supabase:</strong> banco de dados para verificação de membros (hospedado na AWS, dados criptografados em trânsito e em repouso).</li>
+      <li><strong>Netlify:</strong> hospedagem da aplicação web.</li>
+      <li><strong>Z-API:</strong> envio de mensagens WhatsApp à equipe quando o usuário envia feedback pela ferramenta.</li>
+    </ul>
+
+    <h2>5. Período de Retenção</h2>
+    <ul>
+      <li><strong>Dados de verificação:</strong> mantidos enquanto o usuário for membro ativo da comunidade.</li>
+      <li><strong>Eventos de uso:</strong> mantidos por até 12 meses.</li>
+    </ul>
+
+    <h2>6. Seus Direitos (LGPD)</h2>
+    <p>Você tem direito a:</p>
+    <ul>
+      <li>Confirmação da existência de tratamento de dados;</li>
+      <li>Acesso aos seus dados pessoais;</li>
+      <li>Correção de dados incompletos ou desatualizados;</li>
+      <li>Eliminação dos dados pessoais (veja o link abaixo);</li>
+      <li>Informação sobre compartilhamento de dados;</li>
+      <li>Revogação do consentimento.</li>
+    </ul>
+
+    <div class="card">
+      <p><strong>Solicitar exclusão dos seus dados:</strong></p>
+      <p><a href="data-deletion.html">Clique aqui para solicitar a exclusão dos seus dados pessoais</a></p>
+    </div>
+
+    <h2>7. Segurança</h2>
+    <p>Implementamos medidas técnicas para proteger seus dados:</p>
+    <ul>
+      <li>Comunicação criptografada (HTTPS/TLS);</li>
+      <li>Row-Level Security (RLS) no banco de dados;</li>
+      <li>Limitação de taxa de requisições;</li>
+      <li>Chaves de API nunca armazenadas no servidor.</li>
+    </ul>
+
+    <h2>8. Contato</h2>
+    <p>Para dúvidas sobre esta política ou exercer seus direitos:</p>
+    <ul>
+      <li><strong>E-mail:</strong> contato@lyraarte.com</li>
+      <li><strong>WhatsApp:</strong> +55 11 99735-2416</li>
+    </ul>
+  </div>
+</body>
+</html>

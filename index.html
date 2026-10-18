@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <script>/* gate-bootstrap: capture an early login submit before the remote gate wires up, so the first click is never lost */
+  (function(){function h(e){var f=e.target;if(f&&f.id==='gate-form'&&!window.MembershipGate){e.preventDefault();e.stopImmediatePropagation();window.__gateEarlySubmit=true;}}window.addEventListener('submit',h,true);window.__gateBootstrapDisarm=function(){window.removeEventListener('submit',h,true);};})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Despesas IA — Maestros da IA</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://gate.maestrosdaia.com">
+  <link rel="preload" href="https://gate.maestrosdaia.com/v1/membership-gate.js" as="script">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b1220'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1' fill='%2322d3ee'/%3E%3Crect x='14' y='12' width='4' height='13' rx='1' fill='%2322c55e'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='%23f5b301'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="bg-gradient"></div>
+
+  <!-- MEMBERSHIP GATE -->
+  <div id="gate-screen" class="screen active">
+    <div class="gate-container">
+      <div class="gate-header">
+        <h1 class="gradient-text">Despesas IA</h1>
+        <p class="subtitle">Leitor de recibos e notas em lote: fotos e PDFs viram planilha, resumo e relatório de despesas.</p>
+        <p class="community-badge">Exclusivo para membros da Comunidade Maestros da IA</p>
+      </div>
+
+      <form id="gate-form" class="gate-form">
+        <div class="form-group">
+          <label for="gate-email">Seu e-mail cadastrado</label>
+          <input type="email" id="gate-email" placeholder="seu@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="gate-phone">Seu WhatsApp (com DDD)</label>
+          <input type="tel" id="gate-phone" placeholder="11999999999" autocomplete="tel">
+        </div>
+        <button type="submit" id="gate-submit" class="btn-primary">
+          <span class="btn-text">Verificar acesso</span>
+          <span class="btn-loading" style="display:none;">Verificando...</span>
+        </button>
+        <p id="gate-error" class="error-message" style="display:none;"></p>
+      </form>
+
+      <p class="gate-footer">Ainda não é membro? <a href="https://comunidade.maestrosdaia.com" target="_blank" rel="noopener noreferrer">Conheça a Comunidade Maestros da IA</a></p>
+    </div>
+  </div>
+
+  <!-- API KEY SETUP (shown after membership verification) -->
+  <div id="key-screen" class="screen">
+    <div class="key-container">
+      <h2>Configure suas chaves de API</h2>
+      <p class="subtitle">Suas chaves ficam salvas apenas no seu navegador. Nunca são enviadas para nossos servidores.</p>
+
+      <div id="key-inputs" class="key-inputs">
+        <!-- Dynamically populated by api-key-manager.js based on {{AI_SERVICES}} -->
+      </div>
+
+      <div class="key-actions">
+        <button id="key-continue" class="btn-primary" disabled>Continuar para a ferramenta</button>
+        <button id="key-skip" class="btn-secondary">Pular por enquanto</button>
+      </div>
+
+      <details class="key-info">
+        <summary>Como consigo uma chave de API?</summary>
+        <div class="key-info-content">
+          <p><strong>OpenAI:</strong> Acesse <code>platform.openai.com/api-keys</code> e crie uma nova chave.</p>
+          <p><strong>Anthropic (Claude):</strong> Acesse <code>console.anthropic.com</code> e crie uma chave de API.</p>
+          <p><strong>Google (Gemini):</strong> Acesse <code>aistudio.google.com/apikey</code> e gere uma chave.</p>
+          <p><strong>OpenRouter:</strong> Acesse <code>openrouter.ai/keys</code> e crie uma chave.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- MAIN APPLICATION -->
+  <div id="app-screen" class="screen">
+    <header class="app-header">
+      <div class="header-left">
+        <h1 class="app-title">Despesas IA</h1>
+      </div>
+      <div class="header-right">
+        <a href="about.html" class="btn-icon" title="Sobre esta ferramenta" aria-label="Sobre">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </a>
+        <button id="manage-keys-btn" class="btn-icon" title="Gerenciar chaves de API">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        </button>
+        <button id="logout-btn" class="btn-icon" title="Sair">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- ========================================
+           YOUR APPLICATION CONTENT GOES HERE
+           Replace this section with the actual tool UI.
+           ======================================== -->
+      <div class="placeholder-content">
+        <div class="card">
+          <h2>Bem-vindo, <span id="user-name">Maestro</span>!</h2>
+          <p>Esta ferramenta está pronta para uso. Comece explorando as funcionalidades abaixo.</p>
+        </div>
+
+        <div class="card">
+          <h3>Funcionalidade Principal</h3>
+          <p>Implemente a funcionalidade principal da ferramenta aqui.</p>
+          <div id="main-feature" class="feature-area">
+            <!-- Main feature UI -->
+          </div>
+        </div>
+      </div>
+      <!-- ======================================== -->
+    </main>
+
+    <footer class="app-footer">
+      <p>Feito com carinho para a comunidade <strong>Maestros da IA</strong></p>
+      <p class="footer-links">
+        <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>
+        <span class="footer-sep">·</span>
+        <a href="data-deletion.html" target="_blank" rel="noopener noreferrer">Solicitar Exclusão de Dados</a>
+      </p>
+    </footer>
+  </div>
+
+  <!-- API Key Manager Modal -->
+  <div id="key-modal" class="modal" style="display:none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Gerenciar Chaves de API</h3>
+        <button id="modal-close" class="btn-icon">&times;</button>
+      </div>
+      <div id="modal-key-inputs" class="key-inputs"></div>
+      <div class="modal-actions">
+        <button id="modal-save" class="btn-primary">Salvar</button>
+        <button id="modal-clear" class="btn-danger">Limpar todas as chaves</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="kill-switch.js"></script>
+  <script src="rate-limiter.js"></script>
+  <script src="https://gate.maestrosdaia.com/v1/membership-gate.js"></script>
+  <script src="api-key-manager.js"></script>
+  <script src="feedback-widget.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

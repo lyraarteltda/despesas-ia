@@ -1,0 +1,10 @@
+node_modules/
+.env
+*.env
+.DS_Store
+.netlify/
+*.log
+tmp/
+.circle/
+.security/
+.test-members.json
