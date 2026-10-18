@@ -1,141 +1,308 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <script>/* gate-bootstrap: capture an early login submit before the remote gate wires up, so the first click is never lost */
-  (function(){function h(e){var f=e.target;if(f&&f.id==='gate-form'&&!window.MembershipGate){e.preventDefault();e.stopImmediatePropagation();window.__gateEarlySubmit=true;}}window.addEventListener('submit',h,true);window.__gateBootstrapDisarm=function(){window.removeEventListener('submit',h,true);};})();</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="gate-bootstrap.js"></script>
   <title>Despesas IA — Maestros da IA</title>
+  <meta name="description" content="Arraste as fotos e PDFs dos seus recibos, cupons e notas: a IA lê um por um e monta a planilha de despesas (.xlsx), o resumo por categoria e o relatório em PDF com os comprovantes anexados.">
   <link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="fonts/martian-mono-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preconnect" href="https://gate.maestrosdaia.com">
   <link rel="preload" href="https://gate.maestrosdaia.com/v1/membership-gate.js" as="script">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b1220'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1' fill='%2322d3ee'/%3E%3Crect x='14' y='12' width='4' height='13' rx='1' fill='%2322c55e'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='%23f5b301'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231c2024'/%3E%3Cpath d='M8 4h16v21l-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6-2 1.6z' fill='%23f7f5ef'/%3E%3Crect x='11' y='8' width='10' height='1.6' fill='%2324272c'/%3E%3Crect x='11' y='12' width='7' height='1.4' fill='%2324272c'/%3E%3Crect x='11' y='15' width='10' height='1.4' fill='%2324272c'/%3E%3Crect x='11' y='19' width='10' height='2' fill='%23c41d55'/%3E%3C/svg%3E">
 </head>
 <body>
-  <div class="bg-gradient"></div>
 
-  <!-- MEMBERSHIP GATE -->
+  <!-- ═══════════ MEMBERSHIP GATE ═══════════ -->
   <div id="gate-screen" class="screen active">
-    <div class="gate-container">
-      <div class="gate-header">
-        <h1 class="gradient-text">Despesas IA</h1>
-        <p class="subtitle">Leitor de recibos e notas em lote: fotos e PDFs viram planilha, resumo e relatório de despesas.</p>
-        <p class="community-badge">Exclusivo para membros da Comunidade Maestros da IA</p>
+    <div class="gate-wrap">
+      <div class="gate-intro">
+        <p class="eyebrow">Caixa de comprovantes · prestação de contas</p>
+        <h1 class="display-title">Despesas IA</h1>
+        <p class="subtitle">Arraste as fotos e PDFs dos seus recibos, cupons fiscais, notas e comprovantes de Pix. A IA lê um por um e devolve a planilha pronta, o resumo por categoria e o relatório em PDF com os comprovantes anexados.</p>
+        <div class="gate-tape" aria-hidden="true">
+          <div class="tape-line"><span>POSTO SERRA AZUL</span><span>230,00</span></div>
+          <div class="tape-line"><span>PAPELARIA CENTRAL</span><span>48,90</span></div>
+          <div class="tape-line"><span>CAFÉ DO PORTO</span><span>32,50</span></div>
+          <div class="tape-rule"></div>
+          <div class="tape-line tape-total"><span>TOTAL</span><span>R$ 311,40</span></div>
+        </div>
       </div>
 
-      <form id="gate-form" class="gate-form">
-        <div class="form-group">
-          <label for="gate-email">Seu e-mail cadastrado</label>
-          <input type="email" id="gate-email" placeholder="seu@email.com" autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label for="gate-phone">Seu WhatsApp (com DDD)</label>
-          <input type="tel" id="gate-phone" placeholder="11999999999" autocomplete="tel">
-        </div>
-        <button type="submit" id="gate-submit" class="btn-primary">
-          <span class="btn-text">Verificar acesso</span>
-          <span class="btn-loading" style="display:none;">Verificando...</span>
-        </button>
-        <p id="gate-error" class="error-message" style="display:none;"></p>
-      </form>
+      <div class="receipt gate-card">
+        <div class="receipt-body">
+          <p class="r-head">CUPOM DE ACESSO</p>
+          <p class="r-sub">Nº 000001 · VIA DO MEMBRO</p>
+          <div class="r-rule" aria-hidden="true"></div>
+          <h2 class="r-title">Entre com os dados da sua compra</h2>
+          <p class="community-badge">Exclusivo para membros da Comunidade Maestros da IA</p>
 
-      <p class="gate-footer">Ainda não é membro? <a href="https://comunidade.maestrosdaia.com" target="_blank" rel="noopener noreferrer">Conheça a Comunidade Maestros da IA</a></p>
+          <form id="gate-form" class="gate-form" novalidate>
+            <div class="form-group">
+              <label for="gate-email">Seu e-mail cadastrado</label>
+              <input type="email" id="gate-email" placeholder="seu@email.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="gate-phone">Seu WhatsApp (com DDD)</label>
+              <input type="tel" id="gate-phone" placeholder="11999999999" autocomplete="tel">
+            </div>
+            <p class="form-hint">Basta um dos dois — e-mail <em>ou</em> WhatsApp da sua compra.</p>
+            <button type="submit" id="gate-submit" class="btn-primary btn-block">
+              <span class="btn-text">Verificar acesso</span>
+              <span class="btn-loading">Verificando...</span>
+            </button>
+            <p id="gate-error" class="error-message" role="alert"></p>
+            <p class="gate-checking"><span class="gate-checking-dot" aria-hidden="true"></span>Conferindo o seu acesso…</p>
+          </form>
+
+          <div class="r-rule" aria-hidden="true"></div>
+          <p class="gate-footer">Ainda não é membro? <a href="https://comunidade.maestrosdaia.com" target="_blank" rel="noopener noreferrer">Conheça a Comunidade Maestros da IA</a></p>
+          <div class="r-barcode" aria-hidden="true"></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- API KEY SETUP (shown after membership verification) -->
+  <!-- ═══════════ API KEY SETUP ═══════════ -->
   <div id="key-screen" class="screen">
-    <div class="key-container">
-      <h2>Configure suas chaves de API</h2>
-      <p class="subtitle">Suas chaves ficam salvas apenas no seu navegador. Nunca são enviadas para nossos servidores.</p>
+    <div class="key-wrap">
+      <div class="receipt key-card">
+        <div class="receipt-body">
+          <p class="r-head">ANTES DE ABRIR O CAIXA</p>
+          <div class="r-rule" aria-hidden="true"></div>
+          <h2 class="r-title">Conecte sua chave de IA</h2>
+          <p class="r-text">A ferramenta usa a <strong>sua própria chave</strong> da OpenRouter (BYOK). Ela fica salva só neste navegador e nunca é enviada para nossos servidores. As imagens dos comprovantes também vão direto daqui para o provedor de IA da sua chave.</p>
 
-      <div id="key-inputs" class="key-inputs">
-        <!-- Dynamically populated by api-key-manager.js based on {{AI_SERVICES}} -->
-      </div>
+          <form id="key-inputs" class="key-inputs" novalidate></form>
 
-      <div class="key-actions">
-        <button id="key-continue" class="btn-primary" disabled>Continuar para a ferramenta</button>
-        <button id="key-skip" class="btn-secondary">Pular por enquanto</button>
-      </div>
+          <div class="field">
+            <label for="key-model-select">Modelo de IA (com leitura de imagem)</label>
+            <select id="key-model-select"></select>
+            <p class="field-note">Todos os modelos da lista leem imagens. Para lotes grandes, um modelo rápido e econômico (como o Gemini Flash) lê cada comprovante por menos de um centavo.</p>
+          </div>
 
-      <details class="key-info">
-        <summary>Como consigo uma chave de API?</summary>
-        <div class="key-info-content">
-          <p><strong>OpenAI:</strong> Acesse <code>platform.openai.com/api-keys</code> e crie uma nova chave.</p>
-          <p><strong>Anthropic (Claude):</strong> Acesse <code>console.anthropic.com</code> e crie uma chave de API.</p>
-          <p><strong>Google (Gemini):</strong> Acesse <code>aistudio.google.com/apikey</code> e gere uma chave.</p>
-          <p><strong>OpenRouter:</strong> Acesse <code>openrouter.ai/keys</code> e crie uma chave.</p>
+          <div class="key-actions">
+            <button id="key-continue" class="btn-primary" disabled>Abrir o caixa</button>
+            <button id="key-skip" class="btn-secondary">Pular por enquanto</button>
+          </div>
+
+          <details class="key-info">
+            <summary>Como consigo uma chave da OpenRouter?</summary>
+            <div class="key-info-content">
+              <p>Crie uma conta em <code>openrouter.ai</code>, abra <code>openrouter.ai/keys</code> e clique em <em>Create Key</em>.</p>
+              <p>Adicione créditos (a partir de US$ 5) e cole a chave <code>sk-or-...</code> aqui. Com US$ 5 você lê centenas de comprovantes.</p>
+            </div>
+          </details>
         </div>
-      </details>
+      </div>
     </div>
   </div>
 
-  <!-- MAIN APPLICATION -->
+  <!-- ═══════════ MAIN APPLICATION ═══════════ -->
   <div id="app-screen" class="screen">
     <header class="app-header">
       <div class="header-left">
-        <h1 class="app-title">Despesas IA</h1>
+        <svg class="brandmark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="4" fill="#2b3036"/><path d="M8 4h16v21l-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6-2 1.6z" fill="#f7f5ef"/><rect x="11" y="8" width="10" height="1.6" fill="#24272c"/><rect x="11" y="12" width="7" height="1.4" fill="#24272c"/><rect x="11" y="15" width="10" height="1.4" fill="#24272c"/><rect x="11" y="19" width="10" height="2" fill="#c41d55"/></svg>
+        <div class="header-titles">
+          <h1 class="app-title">Despesas IA</h1>
+          <span class="lote-pill" id="lote-pill"></span>
+        </div>
       </div>
       <div class="header-right">
-        <a href="about.html" class="btn-icon" title="Sobre esta ferramenta" aria-label="Sobre">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <a href="about.html" class="btn-icon" title="Sobre esta ferramenta" aria-label="Sobre esta ferramenta">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         </a>
-        <button id="manage-keys-btn" class="btn-icon" title="Gerenciar chaves de API">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        <button id="manage-keys-btn" class="btn-icon" title="Gerenciar chave de IA" aria-label="Gerenciar chave de IA">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
         </button>
-        <button id="logout-btn" class="btn-icon" title="Sair">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <button id="logout-btn" class="btn-icon" title="Sair" aria-label="Sair">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         </button>
       </div>
     </header>
 
-    <main class="app-main">
-      <!-- ========================================
-           YOUR APPLICATION CONTENT GOES HERE
-           Replace this section with the actual tool UI.
-           ======================================== -->
-      <div class="placeholder-content">
-        <div class="card">
-          <h2>Bem-vindo, <span id="user-name">Maestro</span>!</h2>
-          <p>Esta ferramenta está pronta para uso. Comece explorando as funcionalidades abaixo.</p>
-        </div>
+    <nav class="tabs" role="tablist" aria-label="Etapas">
+      <button class="tab on" role="tab" id="tab-comprovantes" data-tab="comprovantes" aria-selected="true" aria-controls="pane-comprovantes"><span class="tab-n">1</span><span class="tab-t">Comprovantes</span><span class="tab-count" id="count-files">0</span></button>
+      <button class="tab" role="tab" id="tab-lancamentos" data-tab="lancamentos" aria-selected="false" aria-controls="pane-lancamentos"><span class="tab-n">2</span><span class="tab-t">Lançamentos</span><span class="tab-count warn" id="count-review" hidden>0</span></button>
+      <button class="tab" role="tab" id="tab-resumo" data-tab="resumo" aria-selected="false" aria-controls="pane-resumo"><span class="tab-n">3</span><span class="tab-t">Resumo e exportar</span></button>
+      <button class="tab tab-lib" role="tab" id="tab-lotes" data-tab="lotes" aria-selected="false" aria-controls="pane-lotes"><span class="tab-n">≡</span><span class="tab-t">Lotes salvos</span></button>
+    </nav>
 
-        <div class="card">
-          <h3>Funcionalidade Principal</h3>
-          <p>Implemente a funcionalidade principal da ferramenta aqui.</p>
-          <div id="main-feature" class="feature-area">
-            <!-- Main feature UI -->
+    <main class="app-main">
+
+      <!-- ── 1. COMPROVANTES ── -->
+      <section class="pane on" id="pane-comprovantes" role="tabpanel" aria-labelledby="tab-comprovantes">
+        <div class="studio">
+          <div class="studio-side">
+            <div class="paper">
+              <p class="r-head">DADOS DO LOTE</p>
+              <div class="r-rule" aria-hidden="true"></div>
+              <div class="field">
+                <label for="in-nome">Nome do lote</label>
+                <input type="text" id="in-nome" maxlength="80" placeholder="Ex.: Despesas de outubro">
+              </div>
+              <div class="field">
+                <label for="in-resp">Quem gastou / responsável</label>
+                <input type="text" id="in-resp" maxlength="80" placeholder="Ex.: Ana Ribeiro">
+              </div>
+              <div class="field">
+                <label for="in-final">Para que serve este lote</label>
+                <select id="in-final">
+                  <option value="controle">Controle das minhas despesas</option>
+                  <option value="reembolso">Pedido de reembolso</option>
+                  <option value="cliente">Prestação de contas a um cliente</option>
+                  <option value="contador">Enviar para o contador</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="in-cliente">Cliente, projeto ou viagem <span class="opt">(opcional)</span></label>
+                <input type="text" id="in-cliente" maxlength="80" placeholder="Ex.: Evento Cliente Aurora — SP">
+              </div>
+              <div class="field">
+                <label for="model-select">Modelo que lê os comprovantes</label>
+                <select id="model-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="studio-main">
+            <div class="printer">
+              <div class="printer-head">
+                <span class="printer-led" id="printer-led" aria-hidden="true"></span>
+                <span class="printer-label">CAIXA DE COMPROVANTES</span>
+                <span class="printer-count" id="printer-count">0 / 60</span>
+              </div>
+              <label class="dropzone" id="dropzone" for="file-input">
+                <input type="file" id="file-input" class="sr-only" multiple accept="image/jpeg,image/png,image/webp,image/gif,application/pdf,.heic,.heif">
+                <svg class="dz-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h12v19l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"/><path d="M9 7h6M9 10.5h4M9 14h6"/></svg>
+                <span class="dz-title">Arraste os comprovantes aqui</span>
+                <span class="dz-sub">ou toque para escolher · fotos JPG, PNG, WebP e PDFs · até 60 por lote</span>
+              </label>
+              <p class="dz-note" id="dz-note" hidden></p>
+              <div class="process-bar">
+                <button id="process-btn" class="btn-primary" type="button" disabled>Ler comprovantes</button>
+                <button id="stop-btn" class="btn-secondary" type="button" hidden>Parar</button>
+                <button id="sample-btn" class="btn-ghost" type="button">Experimentar com 3 comprovantes de exemplo</button>
+              </div>
+              <div class="progress" id="progress" hidden>
+                <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+                <p class="progress-text" id="progress-text" role="status" aria-live="polite"></p>
+              </div>
+              <p class="process-error" id="process-error" role="alert" hidden></p>
+            </div>
+
+            <div class="spike-head">
+              <h2 class="pane-title">No espeto</h2>
+              <button id="clear-files" class="btn-ghost btn-small" type="button" hidden>Esvaziar lote</button>
+            </div>
+            <div class="spike" id="file-list" aria-live="polite"></div>
+            <p class="empty-note" id="files-empty">Nenhum comprovante ainda. Cada arquivo que você arrastar vira um cupom aqui — e, depois de lido, ganha data, estabelecimento, categoria e valor.</p>
           </div>
         </div>
-      </div>
-      <!-- ======================================== -->
+      </section>
+
+      <!-- ── 2. LANÇAMENTOS ── -->
+      <section class="pane" id="pane-lancamentos" role="tabpanel" aria-labelledby="tab-lancamentos">
+        <div class="pane-head">
+          <h2 class="pane-title">Confira os lançamentos</h2>
+          <p class="pane-sub">Tudo o que a IA leu, ao lado do comprovante. Corrija o que precisar — o resumo e as exportações usam exatamente o que está aqui.</p>
+        </div>
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filtrar lançamentos">
+            <button class="filter on" type="button" data-filter="todos">Todos</button>
+            <button class="filter" type="button" data-filter="conferir">A conferir</button>
+            <button class="filter" type="button" data-filter="duplicados">Possíveis duplicados</button>
+          </div>
+          <div class="toolbar-right">
+            <label class="sr-only" for="cat-filter">Filtrar por categoria</label>
+            <select id="cat-filter"><option value="">Todas as categorias</option></select>
+            <button id="add-manual" class="btn-secondary btn-small" type="button">+ Lançamento sem comprovante</button>
+          </div>
+        </div>
+        <div class="ledger" id="ledger"></div>
+        <p class="empty-note" id="ledger-empty">Ainda não há lançamentos. Arraste comprovantes na etapa 1 e clique em “Ler comprovantes”.</p>
+        <div class="ledger-foot" id="ledger-foot" hidden>
+          <span id="ledger-total"></span>
+          <button class="btn-primary" type="button" data-goto="resumo">Ver resumo e exportar</button>
+        </div>
+      </section>
+
+      <!-- ── 3. RESUMO ── -->
+      <section class="pane" id="pane-resumo" role="tabpanel" aria-labelledby="tab-resumo">
+        <div class="resumo-grid">
+          <div class="ztape-wrap">
+            <div class="receipt ztape" id="ztape"></div>
+          </div>
+          <div class="export-side">
+            <div class="paper">
+              <p class="r-head">LEVAR PARA FORA</p>
+              <div class="r-rule" aria-hidden="true"></div>
+              <button id="dl-xlsx" class="btn-primary btn-block" type="button">Baixar planilha (.xlsx)</button>
+              <p class="field-note">Abas Lançamentos, Por categoria, Por mês e Lote — com fórmulas de soma prontas no Excel e no Google Planilhas.</p>
+              <button id="dl-pdf" class="btn-primary btn-block" type="button">Baixar relatório (PDF)</button>
+              <label class="check"><input type="checkbox" id="pdf-anexos" checked> <span>Anexar as imagens dos comprovantes no fim do PDF</span></label>
+              <label class="check"><input type="checkbox" id="pdf-so-reemb"> <span>Só os lançamentos reembolsáveis</span></label>
+              <button id="dl-csv" class="btn-secondary btn-block" type="button">Baixar .csv</button>
+              <p class="field-note">CSV com ponto e vírgula e vírgula decimal — abre direto no Excel em português.</p>
+              <p class="export-warn" id="export-warn" hidden></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── LOTES SALVOS ── -->
+      <section class="pane" id="pane-lotes" role="tabpanel" aria-labelledby="tab-lotes">
+        <div class="pane-head">
+          <h2 class="pane-title">Lotes salvos neste navegador</h2>
+          <p class="pane-sub">Um lote por mês, por cliente ou por viagem. Fica tudo guardado só aqui, inclusive as imagens dos comprovantes.</p>
+        </div>
+        <div class="lotes-actions">
+          <button id="new-lote" class="btn-primary" type="button">Começar um lote novo</button>
+        </div>
+        <div class="lotes" id="lotes-list"></div>
+      </section>
     </main>
 
     <footer class="app-footer">
-      <p>Feito com carinho para a comunidade <strong>Maestros da IA</strong></p>
-      <p class="footer-links">
-        <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>
-        <span class="footer-sep">·</span>
-        <a href="data-deletion.html" target="_blank" rel="noopener noreferrer">Solicitar Exclusão de Dados</a>
-      </p>
+      <p>Despesas IA · uma ferramenta da Comunidade Maestros da IA</p>
+      <p class="footer-links"><a href="about.html">Sobre</a><a href="privacy-policy.html">Política de Privacidade</a><a href="data-deletion.html">Excluir meus dados</a><button type="button" class="link-btn" id="wipe-local">Apagar dados deste navegador</button></p>
     </footer>
   </div>
 
-  <!-- API Key Manager Modal -->
-  <div id="key-modal" class="modal" style="display:none;">
+  <!-- Comprovante ampliado -->
+  <div id="zoom-modal" class="modal zoom-modal" role="dialog" aria-modal="true" aria-labelledby="zoom-title" hidden>
+    <div class="modal-overlay" data-close-zoom></div>
+    <div class="modal-content zoom-content">
+      <div class="modal-header">
+        <h3 id="zoom-title">Comprovante</h3>
+        <button class="btn-icon" type="button" aria-label="Fechar" data-close-zoom>×</button>
+      </div>
+      <div class="zoom-body" id="zoom-body"></div>
+    </div>
+  </div>
+
+  <!-- Chave de IA -->
+  <div id="key-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="key-modal-title">
     <div class="modal-overlay"></div>
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Gerenciar Chaves de API</h3>
-        <button id="modal-close" class="btn-icon">&times;</button>
+        <h3 id="key-modal-title">Chave de IA</h3>
+        <button id="modal-close" class="btn-icon" type="button" aria-label="Fechar">×</button>
       </div>
-      <div id="modal-key-inputs" class="key-inputs"></div>
+      <form id="modal-key-inputs" class="key-inputs" novalidate></form>
+      <div class="field">
+        <label for="model-select-modal">Modelo de IA</label>
+        <select id="model-select-modal"></select>
+      </div>
       <div class="modal-actions">
-        <button id="modal-save" class="btn-primary">Salvar</button>
-        <button id="modal-clear" class="btn-danger">Limpar todas as chaves</button>
+        <button id="modal-clear" class="btn-ghost" type="button">Apagar chave</button>
+        <button id="modal-save" class="btn-primary" type="button">Salvar</button>
       </div>
     </div>
   </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="config.js"></script>
   <script src="kill-switch.js"></script>
@@ -143,6 +310,8 @@
   <script src="https://gate.maestrosdaia.com/v1/membership-gate.js"></script>
   <script src="api-key-manager.js"></script>
   <script src="feedback-widget.js"></script>
+  <script src="vendor/xlsx.js" defer></script>
+  <script src="vendor/jspdf.umd.min.js" defer></script>
   <script src="app.js"></script>
 </body>
 </html>

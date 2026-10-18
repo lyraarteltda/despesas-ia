@@ -3,137 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solicitar Exclusão de Dados — Despesas IA</title>
-  <style>
-    :root {
-      --bg: #0a0a0f; --bg-elev: #13161f; --bg-card: rgba(255,255,255,.04);
-      --text: #e8e8ec; --text-muted: #9ca3af; --text-dim: #6b7280;
-      --accent: #a78bfa; --accent-pink: #f472b6; --border: rgba(255,255,255,.08);
-      --good: #10b981; --low: #ef4444;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg); color: var(--text); line-height: 1.6; font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-    }
-    .container { max-width: 520px; margin: 0 auto; padding: 48px 24px; }
-    .back-link { display: inline-block; margin-bottom: 24px; font-size: 14px; color: var(--accent); text-decoration: none; }
-    .back-link:hover { text-decoration: underline; }
-    h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px;
-      background: linear-gradient(135deg, #fff, var(--accent)); -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; background-clip: text; }
-    .subtitle { color: var(--text-muted); font-size: 15px; margin-bottom: 32px; }
-    .form-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 32px; }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-    .form-group input, .form-group textarea {
-      width: 100%; padding: 12px 16px; background: var(--bg-elev); border: 1px solid var(--border);
-      border-radius: 12px; color: var(--text); font-size: 16px; font-family: inherit; outline: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .form-group input:focus, .form-group textarea:focus {
-      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(167,139,250,.2);
-    }
-    .form-group textarea { min-height: 100px; resize: vertical; }
-    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-dim); }
-    .btn-primary {
-      width: 100%; padding: 14px 24px; background: linear-gradient(135deg, var(--accent), var(--accent-pink));
-      color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600;
-      font-family: inherit; cursor: pointer; transition: filter .2s; min-height: 48px;
-    }
-    .btn-primary:hover { filter: brightness(1.1); }
-    .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
-    .error-message { color: var(--low); font-size: 14px; margin-top: 12px; text-align: center; display: none; }
-    .success-message { color: var(--good); font-size: 14px; margin-top: 12px; text-align: center; display: none; }
-    .info-box { background: rgba(167,139,250,.08); border: 1px solid rgba(167,139,250,.2); border-radius: 12px; padding: 16px; margin-top: 24px; }
-    .info-box p { color: var(--text-muted); font-size: 13px; margin-bottom: 4px; }
-  </style>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b1220'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1' fill='%2322d3ee'/%3E%3Crect x='14' y='12' width='4' height='13' rx='1' fill='%2322c55e'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1' fill='%23f5b301'/%3E%3C/svg%3E">
+  <title>Excluir meus dados — Despesas IA · Maestros da IA</title>
+  <meta name="description" content="Peça a exclusão dos seus dados pessoais (LGPD).">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231c2024'/%3E%3Cpath d='M8 4h16v21l-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6-2 1.6z' fill='%23f7f5ef'/%3E%3Crect x='11' y='8' width='10' height='1.6' fill='%2324272c'/%3E%3Crect x='11' y='12' width='7' height='1.4' fill='%2324272c'/%3E%3Crect x='11' y='15' width='10' height='1.4' fill='%2324272c'/%3E%3Crect x='11' y='19' width='10' height='2' fill='%23c41d55'/%3E%3C/svg%3E">
 </head>
 <body>
-  <div class="container">
-    <a href="index.html" class="back-link">&larr; Voltar para a ferramenta</a>
-    <h1>Solicitar Exclusão de Dados</h1>
-    <p class="subtitle">Em conformidade com a LGPD, você pode solicitar a exclusão dos seus dados pessoais a qualquer momento.</p>
+  <div class="doc-wrap">
+    <div class="doc-top">
+      <a class="doc-brand" href="index.html"><svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="4" fill="#2b3036"/><path d="M8 4h16v21l-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6-2 1.6-2-1.6-2 1.6z" fill="#f7f5ef"/><rect x="11" y="8" width="10" height="1.6" fill="#24272c"/><rect x="11" y="12" width="7" height="1.4" fill="#24272c"/><rect x="11" y="15" width="10" height="1.4" fill="#24272c"/><rect x="11" y="19" width="10" height="2" fill="#c41d55"/></svg>Despesas IA</a>
+      <a href="index.html">Voltar para a ferramenta</a>
+    </div>
+    <main class="receipt doc">
+      <p class="r-head">DIREITO GARANTIDO PELA LGPD</p>
+      <div class="r-rule" aria-hidden="true"></div>
+      <h1>Solicitar exclusão de dados</h1>
+      <p class="lead">Você pode pedir a exclusão dos seus dados pessoais a qualquer momento.</p>
+      <p>Os lotes, as imagens dos comprovantes, os lançamentos e a sua chave de IA ficam só no seu navegador — para apagá-los, use <strong>Apagar dados deste navegador</strong> no rodapé da ferramenta. O pedido abaixo trata dos dados de membro que ficam com a comunidade.</p>
 
-    <div class="form-card">
-      <form id="deletion-form">
+      <form id="deletion-form" novalidate>
         <div class="form-group">
           <label for="del-email">Seu e-mail cadastrado</label>
-          <input type="email" id="del-email" placeholder="seu@email.com" required autocomplete="email">
+          <input type="email" id="del-email" placeholder="seu@email.com" autocomplete="email" inputmode="email" required>
         </div>
         <div class="form-group">
-          <label for="del-phone">Seu WhatsApp (opcional)</label>
-          <input type="tel" id="del-phone" placeholder="11999999999" autocomplete="tel">
+          <label for="del-phone">Seu WhatsApp <span class="opt">(opcional)</span></label>
+          <input type="tel" id="del-phone" placeholder="11999999999" autocomplete="tel" inputmode="tel">
         </div>
         <div class="form-group">
-          <label for="del-reason">Motivo (opcional)</label>
-          <textarea id="del-reason" placeholder="Conte-nos por que deseja excluir seus dados..."></textarea>
+          <label for="del-reason">Motivo <span class="opt">(opcional)</span></label>
+          <textarea id="del-reason" rows="4" maxlength="1000" placeholder="Se quiser, conte por que deseja excluir os seus dados."></textarea>
         </div>
         <button type="submit" id="del-submit" class="btn-primary">
           <span class="btn-text">Enviar solicitação</span>
-          <span class="btn-loading" style="display:none;">Enviando...</span>
+          <span class="btn-loading" hidden>Enviando…</span>
         </button>
-        <p id="del-error" class="error-message"></p>
-        <p id="del-success" class="success-message"></p>
+        <p id="del-error" class="result bad" role="alert" hidden></p>
+        <p id="del-success" class="result good" role="status" hidden></p>
       </form>
-    </div>
 
-    <div class="info-box">
-      <p><strong>O que acontece após a solicitação:</strong></p>
-      <p>Sua solicitação será processada em até 15 dias úteis. Você receberá confirmação por e-mail quando seus dados forem excluídos. Caso tenha dúvidas, entre em contato: contato@lyraarte.com</p>
-    </div>
+      <div class="callout"><p><strong>O que acontece depois:</strong> o pedido é processado em até 15 dias úteis e você recebe a confirmação por e-mail. Dúvidas: contato@lyraarte.com</p></div>
+    </main>
+    <p class="doc-foot"><span>Feito para a <a href="https://comunidade.maestrosdaia.com" target="_blank" rel="noopener noreferrer">Comunidade Maestros da IA</a></span><a href="about.html">Sobre</a><a href="privacy-policy.html">Política de Privacidade</a><a href="data-deletion.html">Excluir meus dados</a></p>
   </div>
-
   <script src="config.js"></script>
-  <script>
-    document.getElementById('deletion-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      var email = document.getElementById('del-email').value.trim();
-      var phone = document.getElementById('del-phone').value.trim();
-      var reason = document.getElementById('del-reason').value.trim();
-      var submitBtn = document.getElementById('del-submit');
-      var errorEl = document.getElementById('del-error');
-      var successEl = document.getElementById('del-success');
-
-      errorEl.style.display = 'none';
-      successEl.style.display = 'none';
-      submitBtn.disabled = true;
-      submitBtn.querySelector('.btn-text').style.display = 'none';
-      submitBtn.querySelector('.btn-loading').style.display = 'inline';
-
-      try {
-        var base = (window.APP_CONFIG && window.APP_CONFIG.n8nWebhookBase) || '';
-        var resp = await fetch(base + '/request-deletion', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: email.toLowerCase(),
-            phone: phone.replace(/\D/g, ''),
-            reason: reason || null
-          })
-        });
-        var result = {};
-        try { result = await resp.json(); } catch {}
-
-        if (!result.success) {
-          errorEl.textContent = result.error || 'Erro ao enviar. Tente novamente ou entre em contato por e-mail.';
-          errorEl.style.display = 'block';
-        } else {
-          successEl.textContent = 'Solicitação enviada com sucesso! Processaremos em até 15 dias úteis.';
-          successEl.style.display = 'block';
-          document.getElementById('deletion-form').reset();
-        }
-      } catch {
-        errorEl.textContent = 'Erro de conexão. Verifique sua internet e tente novamente.';
-        errorEl.style.display = 'block';
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.querySelector('.btn-text').style.display = 'inline';
-        submitBtn.querySelector('.btn-loading').style.display = 'none';
-      }
-    });
-  </script>
+  <script src="data-deletion.js"></script>
 </body>
 </html>

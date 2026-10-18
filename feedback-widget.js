@@ -3,7 +3,7 @@
  * Submissions POST to the n8n /feedback webhook, which verifies membership
  * server-side and notifies the owner on WhatsApp. No database client in the browser.
  *
- * Visual: Urna de Sugestões (classes em styles.css). O conteúdo digitado pelo
+ * Visual: Bobina Térmica (classes em styles.css). O conteúdo digitado pelo
  * membro nunca passa por innerHTML.
  */
 const FeedbackWidget = (function() {

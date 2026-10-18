@@ -45,7 +45,7 @@ const KillSwitch = (function() {
       return;
     }
 
-    // Urna de Sugestões: o balcão fechado para manutenção.
+    // Bobina Térmica: o caixa fechado para manutenção.
     overlay = document.createElement('div');
     overlay.id = 'killswitch-overlay';
     overlay.className = 'killswitch';
@@ -56,14 +56,14 @@ const KillSwitch = (function() {
 
     const tape = document.createElement('p');
     tape.className = 'stamp-label';
-    tape.textContent = 'Balcão fechado';
+    tape.textContent = 'Caixa fechado';
 
     const title = document.createElement('h1');
     title.className = 'killswitch-title';
     title.textContent = 'Em manutenção';
 
     const text = document.createElement('p');
-    text.textContent = 'Estamos ajustando esta ferramenta. Ela volta em breve — seus lotes de avaliações continuam salvos no seu navegador.';
+    text.textContent = 'Estamos ajustando esta ferramenta. Ela volta em breve — seus lotes de despesas continuam salvos no seu navegador.';
 
     const brand = document.createElement('p');
     brand.className = 'killswitch-brand';

@@ -11,7 +11,13 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     X-XSS-Protection = "0"
     Cross-Origin-Opener-Policy = "same-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://gate.maestrosdaia.com; style-src 'self'; connect-src 'self' https://n8n.srv1268751.hstgr.cloud https://openrouter.ai; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://gate.maestrosdaia.com; worker-src 'self'; style-src 'self'; connect-src 'self' https://n8n.srv1268751.hstgr.cloud https://openrouter.ai; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
+# pdf.js ships as ES modules — make sure .mjs is served as JavaScript.
+[[headers]]
+  for = "/vendor/*.mjs"
+  [headers.values]
+    Content-Type = "text/javascript; charset=utf-8"
 
 # Multi-page static site — no SPA catch-all. Unknown paths return a real 404 (COR-023).
 [[redirects]]
